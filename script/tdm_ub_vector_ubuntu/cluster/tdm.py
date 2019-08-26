@@ -27,7 +27,7 @@ from cluster import Cluster
 def hdfs_download(url, dst):
   '''Download HDFS file specified by the url to the dst'''
 
-  command = "hdfs dfs -get {url} {dst}".format(url=url, dst=dst)
+  command = "snakebite get {url} {dst}".format(url=url, dst=dst)
   print(command)
   try:
     retcode = subprocess.call(command, shell=True)
@@ -44,7 +44,7 @@ def hdfs_upload(localfile, url, over_write=False):
   options = ""
   if over_write:
     options += "-f"
-  command = "hdfs dfs -put {options} {localfile} {url}".format(
+  command = "snakebite put {options} {localfile} {url}".format(
       options=options, localfile=localfile, url=url)
   print(command)
   try:
