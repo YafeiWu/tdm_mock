@@ -1,12 +1,12 @@
-FROM registry.cn-hangzhou.aliyuncs.com/xdl/xdl:ubuntu-gpu-mxnet1.3
+FROM registry.cn-hangzhou.aliyuncs.com/xdl/xdl:ubuntu-cpu-mxnet1.3
 ENV WORKPATH=/tdm_mock
 
-RUN cd /build && \
-    apt-get install swig && \
-    pip install snakebite && \
-    pip install sklearn
+RUN apt-get update --fix-missing && \
+    apt-get install -y apt-transport-https ca-certificates && \
+    apt-get install -y swig && \
+    apt-get install -y git
 
-RUN git clone --recursive https://github.com/YafeiWu/tdm_mock.git /tdm_tmp && \
+RUN git clone -b yafeiw --recursive https://github.com/YafeiWu/tdm_mock.git /tdm_tmp && \
     cd /tdm_tmp/src && \
     cp -r /tdm_tmp/script/tdm_ub_att_ubuntu/ "$WORKPATH" && \
     mkdir build && cd build && \
@@ -18,4 +18,3 @@ RUN git clone --recursive https://github.com/YafeiWu/tdm_mock.git /tdm_tmp && \
     cp tdm/lib*.so "$WORKPATH"
 
 WORKDIR $WORKPATH
-
